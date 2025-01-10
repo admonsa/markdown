@@ -1,14 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Markdown Viewer</title>
+    <title>סיכום</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body {
+            text-align: right;
+            direction: rtl;
+            font-family: Arial, sans-serif;
+        }
+        #content {
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
-<div id="content" style="padding: 20px; font-family: Arial, sans-serif;"></div>
+<div id="content"></div>
 <script>
     function getUrlParam(name) {
         const url = new URL(window.location.href);
