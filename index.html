@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Viewer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+<div id="content" style="padding: 20px; font-family: Arial, sans-serif;"></div>
+<script>
+    function getUrlParam(name) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(name);
+    }
+
+    function decompressMarkdown(compressed) {
+        try {
+            const compressedData = Uint8Array.from(atob(compressed), c => c.charCodeAt(0));
+            const decompressedData = pako.inflate(compressedData, { to: 'string' });
+            return decompressedData;
+        } catch (error) {
+            console.error('Failed to decompress:', error);
+            return null;
+        }
+    }
+
+    function renderMarkdown(content) {
+        document.getElementById('content').innerHTML = marked(content);
+    }
+
+    // Main logic
+    const compressedMarkdown = getUrlParam('markdown');
+    if (compressedMarkdown) {
+        const markdown = decompressMarkdown(compressedMarkdown);
+        if (markdown) {
+            renderMarkdown(markdown);
+        } else {
+            document.getElementById('content').innerText = 'Failed to decompress the Markdown content.';
+        }
+    } else {
+        document.getElementById('content').innerText = 'No Markdown parameter provided.';
+    }
+</script>
+</body>
+</html>
