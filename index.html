@@ -27,7 +27,7 @@
     }
 
     function renderMarkdown(content) {
-        document.getElementById('content').innerHTML = marked(content);
+        document.getElementById('content').innerHTML = marked.parse(content);
     }
 
     // Main logic
